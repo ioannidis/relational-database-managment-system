@@ -6,14 +6,14 @@
 DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
-  id INT NOT NULL ,
+  id SERIAL NOT NULL ,
   title VARCHAR(40) NOT NULL ,
 
   PRIMARY KEY (id)
 );
 
-insert into roles (id, title) values (1, 'salesman');
-insert into roles (id, title) values (2, 'technician');
+insert into roles (title) values ('salesman');
+insert into roles (title) values ('technician');
 
 -- makes
 DROP TABLE IF EXISTS car_makes;
