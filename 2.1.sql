@@ -6,3 +6,4 @@ FROM(
 INNER JOIN car_models ON y.cars = public.car_models.id
 GROUP BY title
 ORDER BY COUNT(*) DESC
+LIMIT 1
