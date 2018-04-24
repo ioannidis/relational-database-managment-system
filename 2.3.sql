@@ -1,10 +1,15 @@
 
-SELECT  a.salesman_id, ROUND(SUM(a.price)::numeric,2) - ROUND(SUM(b.price)::numeric,2)
-   FROM sales_history a, sales_history b
-   WHERE a.salesman_id = b.salesman_id AND a.action ='sale' AND b.action='buy'
-   GROUP BY a.salesman_id
-   ORDER BY a.salesman_id
+SELECT  sale_history.salesman_id, ROUND(SUM(sale_history.prices - buy_history.prices)::numeric,2)
+   FROM 
+			(SELECT salesman_id,SUM(price) prices FROM sales_history
+			WHERE action='buy'
+			GROUP BY salesman_id
+			ORDER BY salesman_id ASC)buy_history,
+			
+			(SELECT salesman_id,SUM(price) prices FROM sales_history
+			WHERE action='sale'
+			GROUP BY salesman_id
+			ORDER BY salesman_id ASC)sale_history
 
-
-
-
+   GROUP BY sale_history.salesman_id
+   ORDER BY sale_history.salesman_id
