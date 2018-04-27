@@ -1,3 +1,20 @@
+-- Zitaei kai einai ta montela, oxi poia ienai to montela ton pelaton pou exoun erthei perissoteres fores gia services
+-- model_id, onoma, poses fores exei erthei auto to montelo gia service
+-- 44,	Vanquish,	109
+
+    SELECT
+    model_id,
+    count(model_id) AS num_of_model
+  FROM service_history
+    INNER JOIN car_warehouse ON service_history.car_id = car_warehouse.id
+  GROUP BY model_id
+);
+
+SELECT cm.model_id, car_models.title, cm.num_of_model
+FROM COUNT_MODELS AS cm INNER JOIN car_models ON cm.model_id = car_models.id
+WHERE cm.num_of_model = (SELECT max(num_of_model) AS maximum FROM COUNT_MODELS);
+
+-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 SELECT results.title,MAX(results.total_count) maxResults
 FROM(
 	SELECT car_models.title, COUNT(*) total_count 
