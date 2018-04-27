@@ -2,6 +2,8 @@
 -- model_id, onoma, poses fores exei erthei auto to montelo gia service
 -- 44,	Vanquish,	109
 
+DROP VIEW IF EXISTS COUNT_MODELS;
+CREATE VIEW COUNT_MODELS AS (
     SELECT
     model_id,
     count(model_id) AS num_of_model
