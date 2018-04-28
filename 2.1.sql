@@ -1,20 +1,16 @@
 -- Zitaei kai einai ta montela, oxi poia ienai to montela ton pelaton pou exoun erthei perissoteres fores gia services
 -- model_id, onoma, poses fores exei erthei auto to montelo gia service
--- 44,	Vanquish,	109
+-- 44,	Vanquish,	59
 
 DROP VIEW IF EXISTS COUNT_MODELS;
 CREATE VIEW COUNT_MODELS AS (
-    SELECT
-    model_id,
-    count(model_id) AS num_of_model
-  FROM service_history
-    INNER JOIN car_warehouse ON service_history.car_id = car_warehouse.id
-  GROUP BY model_id
+  SELECT car_models.id, car_models.title, count(car_models.id) AS num_of_model
+  FROM car_warehouse INNER JOIN car_models ON car_warehouse.model_id = car_models.id
+  GROUP BY car_models.id, car_models.title
 );
 
-SELECT cm.model_id, car_models.title, cm.num_of_model
-FROM COUNT_MODELS AS cm INNER JOIN car_models ON cm.model_id = car_models.id
-WHERE cm.num_of_model = (SELECT max(num_of_model) AS maximum FROM COUNT_MODELS);
+SELECT * FROM COUNT_MODELS
+WHERE COUNT_MODELS.num_of_model = (SELECT max(num_of_model) AS maximum FROM COUNT_MODELS);
 
 -- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 SELECT results.title,MAX(results.total_count) maxResults
