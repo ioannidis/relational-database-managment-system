@@ -4,7 +4,7 @@ SELECT
 	car_warehouse.plate,
 	customers.first_name,
 	customers.last_name,
-	COUNT(code) as service_count
+	COUNT(car_models.code) as service_count
 FROM
 	service_history
 	INNER JOIN car_warehouse ON service_history.car_id = car_warehouse.id
@@ -15,6 +15,6 @@ GROUP BY
 	car_warehouse.plate,
 	customers.id
 HAVING
-	COUNT(code) > 1
+	COUNT(car_models.code) > 1
 ORDER BY
 	service_count DESC
