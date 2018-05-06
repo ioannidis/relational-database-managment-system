@@ -54,7 +54,7 @@ BEGIN
   ELSE
     -- We select the id of the car based on plate number
     SELECT id INTO latest_car_id
-    FROM car_warehouse WHERE plate = NEW.plate;
+    FROM car_warehouse WHERE plate = NEW.plate::plate_num;
 
     -- We insert the data in the service_history table
     INSERT INTO service_history(car_id, tech_id, cost, start_date, end_date) VALUES (latest_car_id, NEW.tech_id, NEW.cost, NEW.start_date, NEW.end_date);
