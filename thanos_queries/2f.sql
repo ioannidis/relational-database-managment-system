@@ -10,6 +10,10 @@ FROM
 	INNER JOIN car_warehouse ON service_history.car_id = car_warehouse.id
 	INNER JOIN customers ON car_warehouse.owner_id = customers.id
 	INNER JOIN car_models ON car_warehouse.model_id = car_models.id
+WHERE
+	service_history.start_date <= date_trunc('year', now()) - interval '1 year'
+	OR
+	service_history.end_date <= date_trunc('year', now()) - interval '1 year'
 GROUP BY
 	car_models.id,
 	car_warehouse.plate,
