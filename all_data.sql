@@ -1975,7 +1975,7 @@ CREATE TYPE PLATE_NUM AS (
   plate_number NUMERIC(4,0));
 
 -- car condintion
-CREATE TYPE CAR_CONDITION AS ENUM ('new');
+CREATE TYPE CAR_CONDITION AS ENUM ('new', 'used');
 
 
 -- car warehouse
