@@ -1,8 +1,3 @@
-Ερώτημα 2
-
-
-(a)
-
 SELECT
 	car_models.title AS model,
 	COUNT(car_models.title) as service_count
@@ -29,23 +24,3 @@ HAVING
 				count DESC
 		) AS service_count
 	)
-
-(b)
-
-SELECT
-	to_char(start_date, 'Month') as month,
-	ROUND(AVG(cost)::numeric, 2) as avg_profit
-FROM
-	service_history
-GROUP BY
-	to_char(start_date, 'Month')
-ORDER BY
-	avg_profit DESC
-
-(c)
-
-(d)
-
-(e)
-
-(f)
