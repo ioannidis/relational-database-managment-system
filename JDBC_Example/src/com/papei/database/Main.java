@@ -232,20 +232,25 @@ public class Main
 		System.out.println("Erotima D");
 
 		Statement statement;
-		String query = "SELECT id FROM service_history WHERE end_date IS NULL";
+		String query = "SELECT * FROM service_history WHERE end_date IS NULL";
 
 		try
 		{
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-5s", "ID");
+			System.out.format("%-5s%-10s%-10s%-10s%-20s%-20s", "ID", "Car ID", "Tech ID", "Cost", "Start Date", "End Date");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-5d",
-						res.getInt("id"));
+						"%n%-5d%-10d%-10d%-10d%-20s%-20s",
+						res.getInt("id"),
+						res.getInt("car_id"),
+						res.getInt("tech_id"),
+						res.getInt("cost"),
+						res.getString("start_date"),
+						res.getString("end_date"));
 			}
 		}
 		catch (SQLException e)
