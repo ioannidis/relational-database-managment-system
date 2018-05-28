@@ -3,7 +3,7 @@ SELECT
 	employee.last_name,
 	A.profit,
 	B.costs,
-	ROUND(A.profit - B.costs) AS tziros -- to round borei na paralifthei
+	ROUND(A.profit - B.costs) AS tziros
 FROM
 	(SELECT salesman_id, SUM(price) AS profit FROM sales_history WHERE action = 'sale' GROUP BY salesman_id) AS A
 INNER JOIN
