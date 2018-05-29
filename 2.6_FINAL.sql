@@ -3,7 +3,7 @@ SELECT
 	car_warehouse.plate,
 	customers.first_name,
 	customers.last_name,
-	COUNT(car_models.id) as service_count
+	COUNT(car_models.id) AS service_count
 FROM
 	service_history
 	INNER JOIN car_warehouse ON service_history.car_warehouse_id = car_warehouse.id
