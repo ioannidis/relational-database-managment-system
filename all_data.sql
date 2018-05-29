@@ -6,7 +6,7 @@
 DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
-  id SERIAL NOT NULL ,
+  id VARCHAR(4) NOT NULL ,
   title VARCHAR(40) NOT NULL ,
 
   PRIMARY KEY (id)
@@ -19,7 +19,7 @@ insert into roles (id, title) values ('tech', 'technician');
 DROP TABLE IF EXISTS car_makes;
 
 CREATE TABLE car_makes (
-  id VARCHAR(60) NOT NULL,
+  id VARCHAR(20) NOT NULL,
   title VARCHAR(60) NOT NULL,
 
   PRIMARY KEY (id)
@@ -102,8 +102,8 @@ INSERT INTO car_makes (id, title) VALUES
 DROP TABLE IF EXISTS car_models;
 
 CREATE TABLE car_models (
-  make_id INT NOT NULL REFERENCES car_makes(id),
-  id VARCHAR(60) NOT NULL ,
+  make_id VARCHAR(20) NOT NULL REFERENCES car_makes(id),
+  id VARCHAR(20) NOT NULL ,
   title VARCHAR(60) NOT NULL ,
 
   PRIMARY KEY (id)
@@ -1429,28 +1429,27 @@ CREATE TABLE car_models (
 DROP TABLE IF EXISTS employee;
 
 CREATE TABLE employee (
-  id SERIAL NOT NULL ,
-  role_id INT REFERENCES roles(id),
+  afm NUMERIC(8,0) NOT NULL,
+  role_id VARCHAR(4) REFERENCES roles(id),
   first_name VARCHAR(60) NOT NULL ,
   last_name VARCHAR(60) NOT NULL ,
-  email VARCHAR(60) NOT NULL UNIQUE ,
-  afm NUMERIC(8,0) NOT NULL UNIQUE ,
+  email VARCHAR(60) NOT NULL UNIQUE,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (afm)
 );
 
-insert into employee (role_id, first_name, last_name, email, afm) values (2, 'Livy', 'Collaton', 'lcollaton0@chicagotribune.com', 85601262);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Elroy', 'Kitto', 'ekitto1@toplist.cz', 14304251);
-insert into employee (role_id, first_name, last_name, email, afm) values (2, 'Stuart', 'Clack', 'sclack2@bizjournals.com', 55241214);
-insert into employee (role_id, first_name, last_name, email, afm) values (2, 'Rikki', 'Murrigan', 'rmurrigan3@google.de', 41235675);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Giacobo', 'Tarply', 'gtarply4@intel.com', 50460430);
-insert into employee (role_id, first_name, last_name, email, afm) values (2, 'Evita', 'Molesworth', 'emolesworth5@cnet.com', 79524750);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Dale', 'Mellor', 'dmellor6@cmu.edu', 53373880);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Ronny', 'Dicken', 'rdicken7@admin.ch', 75093387);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Friedrick', 'Petrik', 'fpetrik8@reference.com', 16047979);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Garrek', 'Nevinson', 'gnevinson9@va.gov', 17983590);
-insert into employee (role_id, first_name, last_name, email, afm) values (2, 'Augustine', 'Kennedy', 'akennedya@wikipedia.org', 29928702);
-insert into employee (role_id, first_name, last_name, email, afm) values (1, 'Maddie', 'Wisher', 'mwisherb@comcast.net', 39122247);
+insert into employee (afm, role_id, first_name, last_name, email) values (85601262, 'tech', 'Livy', 'Collaton', 'lcollaton0@chicagotribune.com');
+insert into employee (afm, role_id, first_name, last_name, email) values (14304251, 'sls', 'Elroy', 'Kitto', 'ekitto1@toplist.cz');
+insert into employee (afm, role_id, first_name, last_name, email) values (55241214, 'tech', 'Stuart', 'Clack', 'sclack2@bizjournals.com');
+insert into employee (afm, role_id, first_name, last_name, email) values (41235675, 'tech', 'Rikki', 'Murrigan', 'rmurrigan3@google.de');
+insert into employee (afm, role_id, first_name, last_name, email) values (50460430, 'sls', 'Giacobo', 'Tarply', 'gtarply4@intel.com');
+insert into employee (afm, role_id, first_name, last_name, email) values (79524750, 'tech', 'Evita', 'Molesworth', 'emolesworth5@cnet.com');
+insert into employee (afm, role_id, first_name, last_name, email) values (53373880, 'sls', 'Dale', 'Mellor', 'dmellor6@cmu.edu');
+insert into employee (afm, role_id, first_name, last_name, email) values (75093387, 'sls', 'Ronny', 'Dicken', 'rdicken7@admin.ch');
+insert into employee (afm, role_id, first_name, last_name, email) values (16047979, 'sls', 'Friedrick', 'Petrik', 'fpetrik8@reference.com');
+insert into employee (afm, role_id, first_name, last_name, email) values (17983590, 'sls', 'Garrek', 'Nevinson', 'gnevinson9@va.gov');
+insert into employee (afm, role_id, first_name, last_name, email) values (29928702, 'tech', 'Augustine', 'Kennedy', 'akennedya@wikipedia.org');
+insert into employee (afm, role_id, first_name, last_name, email) values (39122247, 'sls', 'Maddie', 'Wisher', 'mwisherb@comcast.net');
 
 -- customers
 DROP TABLE IF EXISTS customers;
@@ -1966,7 +1965,6 @@ insert into customers (afm, first_name, last_name, email, phone) values (3293374
 insert into customers (afm, first_name, last_name, email, phone) values (61524414, 'Obed', 'Conradie', 'oconradiedu@meetup.com', '6387216925');
 insert into customers (afm, first_name, last_name, email, phone) values (96092712, 'Delainey', 'Hedin', 'dhedindv@blogspot.com', '8697033828');
 
-
 -- plate number type
 CREATE TYPE PLATE_NUM AS (
   plate_char CHAR(3),
@@ -1983,7 +1981,7 @@ CREATE TABLE car_warehouse (
   id SERIAL NOT NULL ,
   owner_id NUMERIC(8,0) REFERENCES customers(id),
   plate PLATE_NUM UNIQUE,
-  model_id INT NOT NULL REFERENCES car_models(id),
+  model_id VARCHAR(20) NOT NULL REFERENCES car_models(id),
   manufacturing_date NUMERIC(4,0),
   condition CAR_CONDITION NOT NULL,
 
@@ -1991,6 +1989,7 @@ CREATE TABLE car_warehouse (
 );
 
 DELETE FROM car_warehouse;
+
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (76954758, ROW('LTS', '6048'), 70, 2010, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (13927211, ROW('GFD', '0377'), 44, 1989, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 67, 2018, 'new');
@@ -2490,6 +2489,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (23395244, ROW('CSF', '3718'), 22, 1989, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (33111878, ROW('SJT', '2791'), 12, 2005, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (25366977, ROW('CJH', '0317'), 59, 1998, 'used');
+
 
 
 DELETE FROM service_history;
@@ -3018,7 +3018,7 @@ DROP TABLE IF EXISTS sales_history;
 CREATE TABLE sales_history (
   id serial NOT NULL ,
   salesman_id NUMERIC(8,0) NOT NULL REFERENCES employee(id),
-  car_warehouse_id int NOT NULL REFERENCES car_warehouse(id),
+  car_warehouse_id INT NOT NULL REFERENCES car_warehouse(id),
   price FLOAT NOT NULL ,
   action SALES_ACTION NOT NULL ,
   date DATE,
@@ -3526,3 +3526,4 @@ insert into sales_history (salesman_id, car_warehouse_id, action, price, date) v
 insert into sales_history (salesman_id, car_warehouse_id, action, price, date) values (39122247, 466, 'sale', '79404.98', '2008-11-08 13:39:49');
 insert into sales_history (salesman_id, car_warehouse_id, action, price, date) values (39122247, 29, 'buy', '38022.77', '2009-12-19 09:08:12');
 insert into sales_history (salesman_id, car_warehouse_id, action, price, date) values (39122247, 415, 'sale', '23064.59', '2015-08-20 02:12:04');
+
