@@ -286,7 +286,7 @@ CREATE TABLE car_models (
 ('BMW', '850CI', ' - 850Ci'),
 ('BMW', '850CSI', ' - 850CSi'),
 ('BMW', '850I', ' - 850i'),
-('BMW', 'L_SERIES', 'L Series (1)'),
+('BMW', 'LΒ_SERIES', 'LΒ Series (1)'),
 ('BMW', 'L7', ' - L7'),
 ('BMW', 'M_SERIES', 'M Series (8)'),
 ('BMW', '1SERIESM', ' - 1 Series M'),
@@ -1172,26 +1172,26 @@ CREATE TABLE car_models (
 ('PEUG', '505', '505'),
 ('PEUG', '604', '604'),
 ('PEUG', 'UNAVAILPEU', 'Other Peugeot Models'),
-('PLYN', 'ACC', 'Acclaim'),
-('PLYN', 'ARROW', 'Arrow'),
-('PLYN', 'BREEZE', 'Breeze'),
-('PLYN', 'CARAVE', 'Caravelle'),
-('PLYN', 'CHAMP', 'Champ'),
-('PLYN', 'COLT', 'Colt'),
-('PLYN', 'PLYMCONQ', 'Conquest'),
-('PLYN', 'GRANFURY', 'Gran Fury'),
-('PLYN', 'PLYMGRANV', 'Grand Voyager'),
-('PLYN', 'HORI', 'Horizon'),
-('PLYN', 'LASER', 'Laser'),
-('PLYN', 'NEON', 'Neon'),
-('PLYN', 'PROWLE', 'Prowler'),
-('PLYN', 'RELI', 'Reliant'),
-('PLYN', 'SAPPOROPLY', 'Sapporo'),
-('PLYN', 'SCAMP', 'Scamp'),
-('PLYN', 'SUNDAN', 'Sundance'),
-('PLYN', 'TRAILDUST', 'Trailduster'),
-('PLYN', 'VOYA', 'Voyager'),
-('PLYN', 'PLYOTH', 'Other Plymouth Models'),
+('PLYM', 'ACC', 'Acclaim'),
+('PLYM', 'ARROW', 'Arrow'),
+('PLYM', 'BREEZE', 'Breeze'),
+('PLYM', 'CARAVE', 'Caravelle'),
+('PLYM', 'CHAMP', 'Champ'),
+('PLYM', 'COLT', 'Colt'),
+('PLYM', 'PLYMCONQ', 'Conquest'),
+('PLYM', 'GRANFURY', 'Gran Fury'),
+('PLYM', 'PLYMGRANV', 'Grand Voyager'),
+('PLYM', 'HORI', 'Horizon'),
+('PLYM', 'LASER', 'Laser'),
+('PLYM', 'NEON', 'Neon'),
+('PLYM', 'PROWLE', 'Prowler'),
+('PLYM', 'RELI', 'Reliant'),
+('PLYM', 'SAPPOROPLY', 'Sapporo'),
+('PLYM', 'SCAMP', 'Scamp'),
+('PLYM', 'SUNDAN', 'Sundance'),
+('PLYM', 'TRAILDUST', 'Trailduster'),
+('PLYM', 'VOYA', 'Voyager'),
+('PLYM', 'PLYOTH', 'Other Plymouth Models'),
 ('PONT', 'T-1000', '1000'),
 ('PONT', '6000', '6000'),
 ('PONT', 'AZTEK', 'Aztek'),
@@ -1230,10 +1230,10 @@ CREATE TABLE car_models (
 ('POR', 'CAYMAN', 'Cayman'),
 ('POR', 'PANAMERA', 'Panamera'),
 ('POR', 'POROTH', 'Other Porsche Models'),
-('RAM', 'RAM1504WD', '1500'),
-('RAM', 'RAM25002WD', '2500'),
-('RAM', 'RAM3502WD', '3500'),
-('RAM', 'RAM4500', '4500'),
+('RAM', 'RAM2504WD', '1500'),
+('RAM', 'RAM35002WD', '2500'),
+('RAM', 'RAM4502WD', '3500'),
+('RAM', 'RAM5500', '4500'),
 ('REN', '18I', '18i'),
 ('REN', 'FU', 'Fuego'),
 ('REN', 'LECAR', 'Le Car'),
@@ -1979,7 +1979,7 @@ DROP TABLE IF EXISTS car_warehouse;
 
 CREATE TABLE car_warehouse (
   id SERIAL NOT NULL ,
-  owner_id NUMERIC(8,0) REFERENCES customers(id),
+  owner_id NUMERIC(8,0) REFERENCES customers(afm),
   plate PLATE_NUM UNIQUE,
   model_id VARCHAR(20) NOT NULL REFERENCES car_models(id),
   manufacturing_date NUMERIC(4,0),
@@ -2024,7 +2024,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (70505173, ROW('EMJ', '6536'), 'TL_MODELS', 1997, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, '80', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (66405654, ROW('NSX', '6420'), 'VIRAGE', 1992, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (208, ROW('PSM', '3667'), 'LEGEND', 1997, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (61524414, ROW('PSM', '3667'), 'LEGEND', 1997, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'V12VANT', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'ALLRDQUA', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'TL_MODELS', 2018, 'new');
@@ -2043,8 +2043,8 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (90619321, ROW('LRQ', '4197'), '4000', 2007, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (96842398, ROW('XTD', '6467'), 'VIGOR', 2008, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'MDX', 2018, 'new');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (24399277, ROW('RJM', '5153'), '3.2TL', 2004, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (2927840, ROW('PJV', '3446'), 'ALLRDQUA', 1999, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (59548136, ROW('RJM', '5153'), '3.2TL', 2004, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (29278406, ROW('PJV', '3446'), 'ALLRDQUA', 1999, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (24122494, ROW('URY', '9698'), 'AMCENC', 2012, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (91134454, ROW('DGU', '4213'), 'QUATTR', 2004, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (96443428, ROW('PPQ', '4836'), 'A8', 2001, 'used');
@@ -2094,7 +2094,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (58489770, ROW('MQM', '6358'), 'LEGEND', 2011, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (87176931, ROW('XEI', '2383'), '4000', 2000, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (31949528, ROW('FGG', '5001'), 'RAPIDE', 2005, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (76404040, ROW('IFB', '4375'), 'AUDI100', 2012, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (61357425, ROW('IFB', '4375'), 'AUDI100', 2012, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'DB7', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'TL_MODELS', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (97794267, ROW('BCG', '0971'), 'VANQUISH', 1973, 'used');
@@ -2102,7 +2102,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (31350635, ROW('KJG', '5524'), 'A7', 2008, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (77867161, ROW('YUA', '3965'), 'SPID', 1987, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (55922039, ROW('ZIZ', '2668'), '5000', 1999, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (267765600, ROW('SLY', '1564'), 'LEGEND', 2010, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (81892680, ROW('SLY', '1564'), 'LEGEND', 2010, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (16758758, ROW('HER', '7075'), '90', 2011, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'RDX', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (42558959, ROW('CTA', '9707'), 'ALFA164', 2012, 'used');
@@ -2155,7 +2155,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (27448715, ROW('IES', '2946'), 'RS4', 1995, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'AZURE', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (29226869, ROW('YAQ', '4865'), 'RS4', 2011, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (98493161, ROW('LQE', '6397'), 'ILX', 1995, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (52312844, ROW('LQE', '6397'), 'ILX', 1995, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (56482586, ROW('ETC', '4084'), 'FERCALIF', 1992, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (66405654, ROW('HUA', '8649'), 'TL_MODELS', 1999, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (78167564, ROW('HJL', '3257'), 'AVENT', 2002, 'used');
@@ -2174,7 +2174,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (90255936, ROW('MJQ', '9342'), '4000', 2006, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, '3.2CL', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'LEGEND', 2018, 'new');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (24399277, ROW('HMZ', '9910'), 'ALFA164', 2003, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (59548136, ROW('HMZ', '9910'), 'ALFA164', 2003, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'V12VANT', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'LEGEND', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'FOCUS', 2018, 'new');
@@ -2195,7 +2195,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (76610326, ROW('TFJ', '9918'), 'RSX', 1993, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (28212729, ROW('FDW', '8154'), '4000', 1993, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (90255936, ROW('LKN', '8597'), '4000', 1996, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (98493161, ROW('SCI', '8118'), 'ES250', 1985, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (52312844, ROW('SCI', '8118'), 'ES250', 1985, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (29204016, ROW('KGE', '3385'), '3.2CL', 1992, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'RSX', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (31651931, ROW('DKW', '4384'), 'V12VANT', 1994, 'used');
@@ -2365,7 +2365,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (37593321, ROW('SOK', '4361'), 'LEGEND', 2005, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'SPID', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (86967919, ROW('ZNN', '9426'), 'LEGEND', 2005, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (95290933, ROW('PZS', '3015'),67, 2001, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (95290933, ROW('PZS', '3015'), 'AMCSPIRIT', 2001, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'LEGEND', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (35409668, ROW('GCZ', '9909'), 'RL_MODELS', 1998, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (23395244, ROW('CUA', '7026'), 'RL_MODELS', 1995, 'used');
@@ -2406,7 +2406,7 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (56847366, ROW('GDQ', '0787'), 'VIRAGE', 1993, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, '5000', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (59547356, ROW('MUO', '5164'), 'RL_MODELS', 1968, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (88005237, ROW('YBU', '9569'),58, 2000, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (88005237, ROW('YBU', '9569'), 'ALFA164', 2000, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, '3.2CL', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'A3', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'TL_MODELS', 2018, 'new');
@@ -2429,10 +2429,10 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (37593321, ROW('YMZ', '5507'), 'EVORA', 1998, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (25366977, ROW('BAQ', '0767'), 'VANQUISH', 2008, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (96443428, ROW('WLG', '4992'), 'RL_MODELS', 1985, 'used');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null,53, 2018, 'new');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'EVORA', 2018, 'new');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (83757595, ROW('BJQ', '2549'), 'VANQUISH', 1985, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (null, null, 'AZURE', 2018, 'new');
-insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (84950553, ROW('TVF', '2262'),50, 1996, 'used');
+insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (84950553, ROW('TVF', '2262'), 'RL_MODELS', 1996, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (78783762, ROW('PKU', '6017'), 'VANQUISH', 1999, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (56319863, ROW('DCY', '6257'), 'QUATTR', 2006, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (87246564, ROW('PRI', '2129'), 'RL_MODELS', 2012, 'used');
@@ -2490,23 +2490,21 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (33111878, ROW('SJT', '2791'), 'RL_MODELS', 2005, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (25366977, ROW('CJH', '0317'), 'ALLRDQUA', 1998, 'used');
 
-
-
-DELETE FROM service_history;
-
 -- service history
 DROP TABLE IF EXISTS service_history;
 
 CREATE TABLE service_history (
   id SERIAL NOT NULL ,
   car_warehouse_id INT NOT NULL REFERENCES car_warehouse(id),
-  tech_id NUMERIC(8,0) NOT NULL REFERENCES employee(id),
+  tech_id NUMERIC(8,0) NOT NULL REFERENCES employee(afm),
   cost FLOAT NOT NULL ,
   start_date DATE NOT NULL ,
   end_date DATE,
 
   PRIMARY KEY (id)
 );
+
+DELETE FROM service_history;
 
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (83, 85601262, '240.56', '2016-05-19 02:09:22', '2016-05-24 02:09:22');
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (215, 85601262, '620.40', '2016-11-20 16:33:03', '2017-01-14 16:33:03');
@@ -3008,8 +3006,6 @@ insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_da
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (403, 29928702, '805.78', '2018-01-12 16:00:28', '2018-02-13 16:00:28');
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (401, 29928702, '156.10', '2016-10-16 20:36:21', '2016-12-09 20:36:21');
 
-
-DELETE FROM sales_history;
 -- sales history
 CREATE TYPE SALES_ACTION AS ENUM ('buy', 'sale');
 
@@ -3017,7 +3013,7 @@ DROP TABLE IF EXISTS sales_history;
 
 CREATE TABLE sales_history (
   id serial NOT NULL ,
-  salesman_id NUMERIC(8,0) NOT NULL REFERENCES employee(id),
+  salesman_id NUMERIC(8,0) NOT NULL REFERENCES employee(afm),
   car_warehouse_id INT NOT NULL REFERENCES car_warehouse(id),
   price FLOAT NOT NULL ,
   action SALES_ACTION NOT NULL ,
@@ -3025,6 +3021,8 @@ CREATE TABLE sales_history (
 
   PRIMARY KEY (id)
 );
+
+DELETE FROM sales_history;
 
 insert into sales_history (salesman_id, car_warehouse_id, action, price, date) values (14304251, 117, 'sale', '24691.88', '2013-02-24 21:15:12');
 insert into sales_history (salesman_id, car_warehouse_id, action, price, date) values (14304251, 302, 'buy', '11822.05', '2013-06-10 20:19:42');
