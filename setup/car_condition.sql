@@ -1,0 +1,1 @@
+CREATE TYPE CAR_CONDITION AS ENUM ('new', 'used');

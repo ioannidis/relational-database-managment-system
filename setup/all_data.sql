@@ -1,8 +1,7 @@
--- =======================================================
--- TODO: THA SPASTOUN SE DIKA TOUS ARXEIA
--- =======================================================
+--------------------------------------------------------------------------------
+-- roles.sql
+--------------------------------------------------------------------------------
 
--- roles
 DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
@@ -12,10 +11,15 @@ CREATE TABLE roles (
   PRIMARY KEY (id)
 );
 
+DELETE FROM roles;
+
 insert into roles (id, title) values ('sls', 'salesman');
 insert into roles (id, title) values ('tech', 'technician');
 
--- makes
+--------------------------------------------------------------------------------
+-- car_makes.sql
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS car_makes;
 
 CREATE TABLE car_makes (
@@ -24,6 +28,8 @@ CREATE TABLE car_makes (
 
   PRIMARY KEY (id)
 );
+
+DELETE FROM car_makes;
 
 INSERT INTO car_makes (id, title) VALUES
 ('ACURA', 'Acura'),
@@ -98,7 +104,10 @@ INSERT INTO car_makes (id, title) VALUES
 ('VOLVO', 'Volvo'),
 ('YUGO', 'Yugo');
 
--- models
+--------------------------------------------------------------------------------
+-- car_models.sql
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS car_models;
 
 CREATE TABLE car_models (
@@ -109,7 +118,9 @@ CREATE TABLE car_models (
   PRIMARY KEY (id)
 );
 
-  INSERT INTO car_models (make_id, id, title) VALUES
+DELETE FROM car_models;
+
+INSERT INTO car_models (make_id, id, title) VALUES
 ('ACURA', 'CL_MODELS', 'CL Models (4)'),
 ('ACURA', '2.2CL', ' - 2.2CL'),
 ('ACURA', '2.3CL', ' - 2.3CL'),
@@ -1425,7 +1436,10 @@ CREATE TABLE car_models (
 ('YUGO', 'GVX', 'GVX'),
 ('YUGO', 'YUOTH', 'Other Yugo Models');
 
--- employee
+--------------------------------------------------------------------------------
+-- employee.sql
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS employee;
 
 CREATE TABLE employee (
@@ -1437,6 +1451,8 @@ CREATE TABLE employee (
 
   PRIMARY KEY (afm)
 );
+
+DELETE FROM employee;
 
 insert into employee (afm, role_id, first_name, last_name, email) values (85601262, 'tech', 'Livy', 'Collaton', 'lcollaton0@chicagotribune.com');
 insert into employee (afm, role_id, first_name, last_name, email) values (14304251, 'sls', 'Elroy', 'Kitto', 'ekitto1@toplist.cz');
@@ -1451,7 +1467,10 @@ insert into employee (afm, role_id, first_name, last_name, email) values (179835
 insert into employee (afm, role_id, first_name, last_name, email) values (29928702, 'tech', 'Augustine', 'Kennedy', 'akennedya@wikipedia.org');
 insert into employee (afm, role_id, first_name, last_name, email) values (39122247, 'sls', 'Maddie', 'Wisher', 'mwisherb@comcast.net');
 
--- customers
+--------------------------------------------------------------------------------
+-- customers.sql
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS customers;
 
 CREATE TABLE customers (
@@ -1463,6 +1482,8 @@ CREATE TABLE customers (
 
   PRIMARY KEY (afm)
 );
+
+DELETE FROM customers;
 
 insert into customers (afm, first_name, last_name, email, phone) values (61333630, 'Angela', 'Ganiford', 'aganiford0@tamu.edu', '4392350904');
 insert into customers (afm, first_name, last_name, email, phone) values (10004451, 'Leigh', 'Easman', 'leasman1@mail.ru', '7217568412');
@@ -1965,16 +1986,24 @@ insert into customers (afm, first_name, last_name, email, phone) values (3293374
 insert into customers (afm, first_name, last_name, email, phone) values (61524414, 'Obed', 'Conradie', 'oconradiedu@meetup.com', '6387216925');
 insert into customers (afm, first_name, last_name, email, phone) values (96092712, 'Delainey', 'Hedin', 'dhedindv@blogspot.com', '8697033828');
 
--- plate number type
+--------------------------------------------------------------------------------
+-- plate_num.sql
+--------------------------------------------------------------------------------
+
 CREATE TYPE PLATE_NUM AS (
   plate_char CHAR(3),
   plate_number NUMERIC(4,0));
 
--- car condintion
+--------------------------------------------------------------------------------
+-- car_condition.sql
+--------------------------------------------------------------------------------
+
 CREATE TYPE CAR_CONDITION AS ENUM ('new', 'used');
 
+--------------------------------------------------------------------------------
+-- car_warehouse.sql
+--------------------------------------------------------------------------------
 
--- car warehouse
 DROP TABLE IF EXISTS car_warehouse;
 
 CREATE TABLE car_warehouse (
@@ -2490,7 +2519,10 @@ insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condit
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (33111878, ROW('SJT', '2791'), 'RL_MODELS', 2005, 'used');
 insert into car_warehouse (owner_id, plate, model_id, manufacturing_date, condition) values (25366977, ROW('CJH', '0317'), 'ALLRDQUA', 1998, 'used');
 
--- service history
+--------------------------------------------------------------------------------
+-- service_history.sql
+--------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS service_history;
 
 CREATE TABLE service_history (
@@ -3006,8 +3038,15 @@ insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_da
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (403, 29928702, '805.78', '2018-01-12 16:00:28', '2018-02-13 16:00:28');
 insert into service_history (car_warehouse_id, tech_id, cost, start_date, end_date) values (401, 29928702, '156.10', '2016-10-16 20:36:21', '2016-12-09 20:36:21');
 
--- sales history
+--------------------------------------------------------------------------------
+-- sales_action.sql
+--------------------------------------------------------------------------------
+
 CREATE TYPE SALES_ACTION AS ENUM ('buy', 'sale');
+
+--------------------------------------------------------------------------------
+-- sales_history.sql
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS sales_history;
 
