@@ -39,6 +39,8 @@ public class Main
 			e.printStackTrace();
 		}
 
+		createViews();
+
 		while (true)
 		{
 			showMenu();
@@ -90,6 +92,80 @@ public class Main
 		executeChoice(input);
 	}
 
+	private static void createViews()
+	{
+		try
+		{
+			Statement statement = conn.createStatement();
+
+			// Create COUNT_MODELS view
+
+			statement.executeUpdate("DROP VIEW IF EXISTS COUNT_MODELS CASCADE");
+
+			statement.executeUpdate("CREATE VIEW COUNT_MODELS AS ("
+					+ "  SELECT "
+					+ "    car_models.title, "
+					+ "    COUNT(car_models.id) AS num_of_model "
+					+ "  FROM "
+					+ "    car_warehouse "
+					+ "    INNER JOIN car_models ON car_warehouse.model_id = car_models.id "
+					+ "  GROUP BY "
+					+ "    car_models.title"
+					+ ")");
+
+			// Create SALES view
+
+			statement.executeUpdate("DROP VIEW IF EXISTS SALES CASCADE");
+
+			statement.executeUpdate("CREATE VIEW SALES AS ("
+					+ "  SELECT "
+					+ "    A.salesman_id, "
+					+ "    SUM(A.price) AS sale "
+					+ "  FROM "
+					+ "    sales_history AS A "
+					+ "  WHERE "
+					+ "    A.action = 'sale' "
+					+ "  GROUP BY "
+					+ "    A.salesman_id"
+					+ ")");
+
+			// Create BUYS view
+
+			statement.executeUpdate("DROP VIEW IF EXISTS BUYS CASCADE");
+
+			statement.executeUpdate("CREATE VIEW BUYS AS ("
+					+ "  SELECT "
+					+ "    A.salesman_id, "
+					+ "    SUM(A.price) AS buy "
+					+ "  FROM "
+					+ "    sales_history AS A "
+					+ "  WHERE "
+					+ "    A.action = 'buy' "
+					+ "  GROUP BY "
+					+ "    A.salesman_id"
+					+ ")");
+
+			// Create PROFIT view
+
+			statement.executeUpdate("DROP VIEW IF EXISTS PROFIT CASCADE");
+
+			statement.executeUpdate("CREATE VIEW PROFIT AS ("
+					+ "  SELECT "
+					+ "    SALES.salesman_id, "
+					+ "    (SALES.sale - BUYS.buy) AS profit "
+					+ "  FROM "
+					+ "    SALES "
+					+ "    NATURAL JOIN BUYS"
+					+ ")");
+
+			System.out.println("Successfully created views.");
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	private static void executeChoice(int choice)
 	{
 		switch (choice)
@@ -132,13 +208,12 @@ public class Main
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-5s%-15s%-20s", "ID", "Title", "Number of Models");
+			System.out.format("%-15s%-20s", "Title", "Number of Models");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-5d%-15s%-20d",
-						res.getInt("id"),
+						"%n%-15s%-20d",
 						res.getString("title"),
 						res.getInt("num_of_model"));
 			}
@@ -196,20 +271,20 @@ public class Main
 
 		Statement statement;
 		String query = "SELECT salesman_id, employee.first_name, employee.last_name, profit "
-				+ "FROM PROFIT INNER JOIN employee ON PROFIT.salesman_id = employee.id "
-				+ "WHERE profit = (SELECT max(profit) FROM PROFIT);";
+				+ "FROM PROFIT INNER JOIN employee ON PROFIT.salesman_id = employee.afm "
+				+ "WHERE profit = (SELECT MAX(profit) FROM PROFIT)";
 
 		try
 		{
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-5s%-20s%-20s%-20s", "ID", "First Name", "Last Name", "Profit");
+			System.out.format("%-20s%-20s%-20s%-20s", "Salesman ID", "First Name", "Last Name", "Profit");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-5d%-20s%-20s%-20d",
+						"%n%-20d%-20s%-20s%-20d",
 						res.getInt("salesman_id"),
 						res.getString("first_name"),
 						res.getString("last_name"),
@@ -239,14 +314,14 @@ public class Main
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-5s%-10s%-10s%-10s%-20s%-20s", "ID", "Car ID", "Tech ID", "Cost", "Start Date", "End Date");
+			System.out.format("%-5s%-20s%-20s%-10s%-20s%-20s", "ID", "Car Warehouse ID", "Tech ID", "Cost", "Start Date", "End Date");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-5d%-10d%-10d%-10d%-20s%-20s",
+						"%n%-5d%-20d%-20d%-10d%-20s%-20s",
 						res.getInt("id"),
-						res.getInt("car_id"),
+						res.getInt("car_warehouse_id"),
 						res.getInt("tech_id"),
 						res.getInt("cost"),
 						res.getString("start_date"),
@@ -269,25 +344,25 @@ public class Main
 		System.out.println("Erotima E");
 
 		Statement statement;
-		String query = "SELECT first_name, last_name, car_id, start_date, end_date "
-				+ "FROM employee INNER JOIN service_history ON employee.id=service_history.tech_id "
-				+ "WHERE employee.id = 3 AND (end_date > NOW() - INTERVAL '1 month' "
-				+ "OR (end_date IS NULL AND start_date > NOW() - INTERVAL '1 month'))";
+		String query = "SELECT first_name, last_name, car_warehouse_id, start_date, end_date "
+				+ "FROM employee INNER JOIN service_history ON employee.afm = service_history.tech_id "
+				+ "WHERE employee.afm = 85601262 AND (end_date > NOW() - INTERVAL '1 month' OR (end_date IS NULL AND start_date > NOW() - INTERVAL '1 month'))";
 
 		try
 		{
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-20s%-20s%-10s%-20s%-20s", "First Name", "Last Name", "Car ID", "Start Date", "End Date");
+			System.out
+					.format("%-20s%-20s%-20s%-20s%-20s", "First Name", "Last Name", "Car Warehouse ID", "Start Date", "End Date");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-20s%-20s%-10d%-20s%-20s",
+						"%n%-20s%-20s%-20d%-20s%-20s",
 						res.getString("first_name"),
 						res.getString("last_name"),
-						res.getInt("car_id"),
+						res.getInt("car_warehouse_id"),
 						res.getString("start_date"),
 						res.getString("end_date"));
 			}
@@ -308,29 +383,33 @@ public class Main
 		System.out.println("Erotima F");
 
 		Statement statement;
-		String query = "SELECT title, car_warehouse.id,COUNT(*) total_count FROM service_history "
-				+ "INNER JOIN car_warehouse ON service_history.car_id=car_warehouse.id "
-				+ "INNER JOIN car_models ON car_warehouse.model_id=car_models.id "
-				+ "WHERE (end_date <= NOW() - INTERVAL '1 year' "
-				+ "OR\tstart_date <= NOW() - INTERVAL '1 year') "
-				+ "GROUP BY title,car_warehouse.id "
-				+ "HAVING COUNT(*) > 1 "
-				+ "ORDER BY total_count DESC";
+		String query =
+				"SELECT car_models.title, car_warehouse.plate, customers.first_name, customers.last_name, COUNT(car_models.id) AS service_count "
+						+ "FROM service_history "
+						+ "INNER JOIN car_warehouse ON service_history.car_warehouse_id = car_warehouse.id "
+						+ "INNER JOIN customers ON car_warehouse.owner_id = customers.afm "
+						+ "INNER JOIN car_models ON car_warehouse.model_id = car_models.id "
+						+ "WHERE service_history.start_date <= date_trunc('year', now()) - interval '1 year' OR service_history.end_date <= date_trunc('year', now()) - interval '1 year' "
+						+ "GROUP BY car_models.id, car_warehouse.plate, customers.afm "
+						+ "HAVING COUNT(car_models.id) > 1 "
+						+ "ORDER BY service_count DESC";
 
 		try
 		{
 			statement = conn.createStatement();
 			ResultSet res = statement.executeQuery(query);
 
-			System.out.format("%-20s%-10s%-10s", "Title", "ID", "Total Count");
+			System.out.format("%-20s%-20s%-20s%-20s%-10s", "Title", "Plate", "First Name", "Last Name", "Service Count");
 
 			while (res.next())
 			{
 				System.out.format(
-						"%n%-20s%-10s%-10s",
+						"%n%-20s%-20s%-20s%-20s%-10d",
 						res.getString("title"),
-						res.getInt("id"),
-						res.getInt("total_count"));
+						res.getString("plate"),
+						res.getString("first_name"),
+						res.getString("last_name"),
+						res.getInt("service_count"));
 			}
 		}
 		catch (SQLException e)
