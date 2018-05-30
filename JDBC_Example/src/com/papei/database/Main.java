@@ -13,6 +13,7 @@ public class Main
 	private static final String Password = "paravantis";
 	private static final String URL = "jdbc:postgresql://" + Domain + ":" + Port + "/" + Database_Name;
 	private static Connection conn;
+	private static Scanner scanner = new Scanner(System.in);
 
 	private static final int CHOICE_INVALID = 0;
 	private static final int CHOICE_MIN = 1;
@@ -63,7 +64,6 @@ public class Main
 
 	private static void selectChoice()
 	{
-		Scanner scanner = new Scanner(System.in);
 		int input = CHOICE_INVALID;
 
 		do
@@ -94,9 +94,11 @@ public class Main
 
 	private static void createViews()
 	{
+		Statement statement = null;
+
 		try
 		{
-			Statement statement = conn.createStatement();
+			statement = conn.createStatement();
 
 			// Create COUNT_MODELS view
 
@@ -164,6 +166,18 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private static void executeChoice(int choice)
@@ -200,13 +214,15 @@ public class Main
 
 		System.out.println("Erotima A");
 
-		Statement statement;
 		String query = "SELECT * FROM COUNT_MODELS WHERE COUNT_MODELS.num_of_model = (SELECT max(num_of_model) AS maximum FROM COUNT_MODELS);";
+
+		Statement statement = null;
+		ResultSet res = null;
 
 		try
 		{
 			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			res = statement.executeQuery(query);
 
 			System.out.format("%-15s%-20s", "Title", "Number of Models");
 
@@ -222,6 +238,21 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println();
 		System.out.println();
@@ -233,16 +264,18 @@ public class Main
 
 		System.out.println("Erotima B");
 
-		Statement statement;
 		String query = "SELECT to_char(start_date, 'Month') as month, ROUND(AVG(cost)::numeric, 2) as avg_profit "
 				+ "FROM service_history "
 				+ "GROUP BY to_char(start_date, 'Month') "
 				+ "ORDER BY avg_profit DESC";
 
+		Statement statement = null;
+		ResultSet res = null;
+
 		try
 		{
 			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			res = statement.executeQuery(query);
 
 			System.out.format("%-20s%-20s", "Month", "Average Profit");
 
@@ -258,6 +291,21 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println();
 		System.out.println();
@@ -269,15 +317,17 @@ public class Main
 
 		System.out.println("Erotima C");
 
-		Statement statement;
 		String query = "SELECT salesman_id, employee.first_name, employee.last_name, profit "
 				+ "FROM PROFIT INNER JOIN employee ON PROFIT.salesman_id = employee.afm "
 				+ "WHERE profit = (SELECT MAX(profit) FROM PROFIT)";
 
+		Statement statement = null;
+		ResultSet res = null;
+
 		try
 		{
 			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			res = statement.executeQuery(query);
 
 			System.out.format("%-20s%-20s%-20s%-20s", "Salesman ID", "First Name", "Last Name", "Profit");
 
@@ -295,6 +345,21 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println();
 		System.out.println();
@@ -306,15 +371,18 @@ public class Main
 
 		System.out.println("Erotima D");
 
-		Statement statement;
 		String query = "SELECT * FROM service_history WHERE end_date IS NULL";
+
+		Statement statement = null;
+		ResultSet res = null;
 
 		try
 		{
 			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			res = statement.executeQuery(query);
 
-			System.out.format("%-5s%-20s%-20s%-10s%-20s%-20s", "ID", "Car Warehouse ID", "Tech ID", "Cost", "Start Date", "End Date");
+			System.out.format("%-5s%-20s%-20s%-10s%-20s%-20s", "ID", "Car Warehouse ID", "Tech ID", "Cost", "Start Date",
+					"End Date");
 
 			while (res.next())
 			{
@@ -332,6 +400,21 @@ public class Main
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println();
 		System.out.println();
@@ -343,33 +426,71 @@ public class Main
 
 		System.out.println("Erotima E");
 
-		Statement statement;
-		String query = "SELECT first_name, last_name, car_warehouse_id, start_date, end_date "
-				+ "FROM employee INNER JOIN service_history ON employee.afm = service_history.tech_id "
-				+ "WHERE employee.afm = 85601262 AND (end_date > NOW() - INTERVAL '1 month' OR (end_date IS NULL AND start_date > NOW() - INTERVAL '1 month'))";
+		int afm = 85601262;
 
 		try
 		{
-			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			System.out.println("Enter Employee AFM: ");
+			afm = scanner.nextInt();
+		}
+		catch (InputMismatchException e)
+		{
+			scanner.next();
+		}
 
-			System.out
-					.format("%-20s%-20s%-20s%-20s%-20s", "First Name", "Last Name", "Car Warehouse ID", "Start Date", "End Date");
+		String query = "SELECT first_name, last_name, car_warehouse_id, start_date, end_date "
+				+ "FROM employee INNER JOIN service_history ON employee.afm = service_history.tech_id "
+				+ "WHERE employee.afm = ? AND (end_date > NOW() - INTERVAL '1 month' OR (end_date IS NULL AND start_date > NOW() - INTERVAL '1 month'))";
 
-			while (res.next())
+		PreparedStatement statement = null;
+		ResultSet res = null;
+
+		try
+		{
+			statement = conn.prepareStatement(query);
+			statement.setInt(1, afm);
+			res = statement.executeQuery();
+
+			if (!res.isBeforeFirst())
 			{
-				System.out.format(
-						"%n%-20s%-20s%-20d%-20s%-20s",
-						res.getString("first_name"),
-						res.getString("last_name"),
-						res.getInt("car_warehouse_id"),
-						res.getString("start_date"),
-						res.getString("end_date"));
+				System.out.println("No results for AFM " + afm + ".");
+			}
+			else
+			{
+				System.out
+						.format("%-20s%-20s%-20s%-20s%-20s", "First Name", "Last Name", "Car Warehouse ID", "Start Date",
+								"End Date");
+
+				while (res.next())
+				{
+					System.out.format(
+							"%n%-20s%-20s%-20d%-20s%-20s",
+							res.getString("first_name"),
+							res.getString("last_name"),
+							res.getInt("car_warehouse_id"),
+							res.getString("start_date"),
+							res.getString("end_date"));
+				}
 			}
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		System.out.println();
@@ -382,7 +503,6 @@ public class Main
 
 		System.out.println("Erotima F");
 
-		Statement statement;
 		String query =
 				"SELECT car_models.title, car_warehouse.plate, customers.first_name, customers.last_name, COUNT(car_models.id) AS service_count "
 						+ "FROM service_history "
@@ -394,10 +514,13 @@ public class Main
 						+ "HAVING COUNT(car_models.id) > 1 "
 						+ "ORDER BY service_count DESC";
 
+		Statement statement = null;
+		ResultSet res = null;
+
 		try
 		{
 			statement = conn.createStatement();
-			ResultSet res = statement.executeQuery(query);
+			res = statement.executeQuery(query);
 
 			System.out.format("%-20s%-20s%-20s%-20s%-10s", "Title", "Plate", "First Name", "Last Name", "Service Count");
 
@@ -415,6 +538,21 @@ public class Main
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if (statement != null)
+					statement.close();
+
+				if (res != null)
+					res.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		System.out.println();
