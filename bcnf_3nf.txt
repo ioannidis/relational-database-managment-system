@@ -1,0 +1,38 @@
+car_makes(id, title)
+K = { id }
+FD1: id -> title
+
+car_models(make_id, id, title)
+K = { id }
+FD1: id -> make_id, title
+
+car_warehouse(id, owner_id, plate, model_id, manufacturing_date, condition)
+K = { id }
+FD1: id -> owner_id, plate, model_id, manufacturing_date, condition
+
+customers(afm, first_name, last_name, email, phone)
+K = { afm }
+FD1: afm -> first_name, last_name, email, phone
+
+employee(afm, role_id, first_name, last_name, email)
+K = { afm }
+FD1: afm -> role_id, first_name, last_name, email
+
+roles(id, title)
+K = { id }
+FD1: id -> title
+
+sales_history(id, salesman_id, car_warehouse_id, price, action, date)
+K = { id }
+FD1: id -> salesman_id, car_warehouse_id, price, action, date
+
+service_history(id, car_warehouse_id, tech_id, cost, start_date, end_date)
+K = { id }
+FD1: id -> car_warehouse_id, tech_id, cost, start_date, end_date
+
+================================================================================
+
+1NF: Τα πεδία τιμών όλων των χαρακτηριστικών είναι ατομικά
+2NF: Τα χαρακτηριστικά δεν προσδιορίζονται από τμήμα ενός υποψήφιου κλειδιού
+3NF: Κανένα χαρακτηριστικό δεν προσδιορίζεται μεταβατικά (όχι για υποψήφια κλειδιά)
+BCNF: Για όλες τις συναρτησιακές εξαρτήσεις Α -> Β το Α είναι υποψήφιο κλειδί
