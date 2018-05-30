@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS cursor_example;
+DROP FUNCTION IF EXISTS cursor_example();
 
 DROP TYPE IF EXISTS temp_type;
 
