@@ -71,22 +71,22 @@ CREATE TRIGGER carExists
 INSERT INTO temp_car_service(first_name, last_name, afm, email, phone,
                              plate, model_id, manufacturing_date,
                              tech_id, cost, start_date, end_date)
-VALUES ('Panos', 'Ioannidis', 00112233, 'panos277@hotmail.com', '2299066795',
-        ROW('AEK', '2172'), 'SCIR', 1999,
-        85601262, 999.99, now(), null);
+VALUES ('Giannis', 'Kontoulis', 99112233, 'ikontoulis@unipi.gr', '2101425859',
+        ROW('ZXM', '2172'), 'SCIR', 2011,
+        85601262, 150.99, now(), null);
 
 INSERT INTO temp_car_service(first_name, last_name, afm, email, phone,
                              plate, model_id, manufacturing_date,
                              tech_id, cost, start_date, end_date)
-VALUES ('SAKIS', 'NIKAS', 22112233, 'asdasdasd@hotmail.com', '1909888887',
-        ROW('PAO', '1234'), 'GOLF', 2000,
+VALUES ('Pertos', 'Petrou', 32659814, 'ppetrou@unipi.gr', '2101425860',
+        ROW('ZXN', '2173'), 'GOLF', 2000,
         85601262, 100.99, now(), null);
 
 -- This car exist
 INSERT INTO temp_car_service(first_name, last_name, afm, email, phone,
                              plate, model_id, manufacturing_date,
                              tech_id, cost, start_date, end_date)
-VALUES ('Thanos', 'Paravantis', 99887766, 'thanos@hotmail.com', '0987654321',
-        ROW('LTS','6048'), 'R32', 1999,
-        85601262, 999.99, now(), null);
+VALUES ('Melany', 'Keitley', 76954758, 'thanos@hotmail.com', '0987654321',
+        ROW('LTS','6048'), 'S4', 2010,
+        85601262, 340.99, now(), null);
 -- end dummy data
