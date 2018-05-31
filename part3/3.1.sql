@@ -27,7 +27,6 @@ CREATE FUNCTION carExists()
   RETURNS TRIGGER AS
 $BODY$
 DECLARE latest_car_id INT;
-DECLARE latest_owner_id INT;
 BEGIN
   IF NOT EXISTS(SELECT plate AS a FROM car_warehouse WHERE plate = NEW.plate::plate_num) THEN
 
