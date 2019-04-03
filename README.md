@@ -1,2 +1,3 @@
 # DB_2018
-Ergasia Baseis Dedomenon
+Databases assigment 2018
+Instrustor: Professor Yannis Theodoridis
