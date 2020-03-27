@@ -1,5 +1,5 @@
 # Relational Database Management System
-A group project that was developed for a university assignment for the subject of Databases.
+A group project that was developed for a university assignment on the subject of Databases.
 
 **The project requirements are as followed:**
 - Design a relational database for the purpose of storing data based on a car dealership company.
