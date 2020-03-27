@@ -10,6 +10,5 @@ A group project that was developed for a university assignment for the subject o
 - Write a program in Java using the JDBC client to simulate real world consumption of the database.
 
 **Group members involved in this project:**
-- Athanasios Paravantis
-- Panagiotis Ioannidis
-- Dionisis Nikas
+
+Ioannidis Panagiotis, Paravantis Athanasios, Nikas Dionisios
